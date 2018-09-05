@@ -1,0 +1,345 @@
+
+
+API Lifecycle:
+  1. Create
+  2. Secure
+  3. Manage
+  4. Socialize
+  5. Monetise
+  6. analytics
+  
+Provider ORG:
+
+- API Connect Toolkit used to create APIs by API Developer (Create)
+- API Management Server used to Publish Created APIs in API Connect Toolkit (Manage)
+- Developer Portal used to publish manu of availability list to user(Manage)
+- API Gateway will be used by consume for service (Secure)
+- API Runtime used to host the solution/API (RUN)
+
+Developer ORG(Consumers):
+
+- Create an Account
+- Register in App
+- Subscribe 
+- Invoke an API through Gateway by end user after subscribed
+- API Gateway route the request either runtime or already existing API(Microservice)/proxy.
+
+Type of Gateway:
+
+- Micro gateway - this gateway is used for small scale implementation like deparment level. This one supports only 1 type of port either secure or non-secure.
+- datapower gateway - This gateway can be used for Enterprise level implementation. This one supports both ports in single product.
+
+- We can create multiple catalog's in Management Server for each envirnoment (i.e. Dev, QA, UAT, SIT etc..)
+
+- Toolkit will provide below tools as part of installaton
+
+  1. CLI
+  2. Designer
+  3. Explorer
+  4. Microgateway
+ 
+----------------------------------------------------------------------
+
+- node -v
+- npm -v
+## to see verion of API CONNECT toolkits available 
+- npm dist-tag ls apiconnect
+
+## To install toolkit
+- npm install -g apiconnect
+
+## Version of API COnnect toolkit
+- apic -v
+
+##Open Toolkit 
+- apic edit
+
+## To Skip Login account 
+- set SKIP_LOGIN=true
+
+# Remote Lab URL
+https://labs.edu.ihost.com/1114792.s5/7b4d
+
+#Backend Services API for free
+
+https://apim-services.mybluemix.com/banka/v1/branches
+
+https://www.programmableweb.com/apis
+
+------------------------------------------------------------------------
+
+API acts as a interface 
+
+API:
+ 1. Definition
+ 2. Implementation
+
+Interface:
+  1. SOAP (WSDL) -> XML
+  2. RESTful (Open API) - Swagger -> JSON, YMAL
+
+Definition contains:
+  1. Types - messages -> operations(SOAP) -> portType | Interface -> Bindings -> transport -> services -> EndPointAddress
+                      -> resource (REST) -> { locate (URI) -> Action (HTTP Method's - get, post, put, delete, head, etc ) } -> REST operation 
+	
+We can pass input values to REST operations	
+  2. Parameters -> Query
+                -> Path 
+				-> Headers 
+				
+ - Types mean Definations
+ - messages mean parameters
+ - operations mean Paths/Methods (Resources)
+ 
+
+ 
+  
+System APIs:
+  - Manage services between DB, MQ and etc..
+  - These APIs are resuable services
+  - It has been created in ESB/Microservices 
+  - this one will come under system and process layers
+  - this one will connect to System of recrds(SORs)
+ 
+ Interaction APIs:
+  - API Geteway 
+  - This will come under exposure layer to consumer 
+  
+Node.js:(Loopback framework)
+-------
+ - If we want to run JavaScript in Server Side we can use Node JS
+ - Loopback framework and also called as model-driven
+ - Loopback framework will provide REST APIs and automatically generate RESR Operations(URI+Method).
+ - Input to this framework is a Model 
+ - Model contains set of properties and relationships
+ - Node contains Connectors same as JDBC drivers 
+ - Data Sources contains all DB connection details
+ - Model associate with Data sources and Data sources associate with Connectors 
+ - Loopback application framework has its own directory structure 
+ - Loopback Model is giving standard setup of operations
+ - Even loopback provide futures to write custom operations(methods)/Remote Methods and loopback framework will provide empty file name called <model>.js
+ - <model>.js contains Implementation and Signatures (method registration) and Signatures part added into *.yaml file
+ - when we ran apic loopback:refresh command, custom operation realted signature details automatically added into *.yaml file
+ 
+ Customer App
+  |
+  |--> COMMOM
+  |      |--> <model>.json   (Standard Operations set)
+  |      |--> <model>.json   (Custom Operations set)
+  |
+  |--> Servers
+  |      |--> datasource.json   (it contains DB as well as NonDB(like SOAP,XML etc.)
+  |      |--> model-config.json
+  |
+  |--> Definitions
+  |      |--> <application_name>.yaml
+  |      |--> <package-config>.yaml
+  |
+  |--> package.json
+  
+- The application generator created the directory structure for a LoopBack application:
+- The common directory stores resources that the client and server application uses.
+- The definitions directory stores the API interface and API product definition files for the LoopBack application. The interface definitions follow the OpenAPI specification, an open source specification that defines REST API structures. The product definition file is a format that is specific to IBM API Connect.
+- The server directory stores the configuration settings, boot scripts, and data source settings for the server application.
+- Every LoopBack application is a Node.js application. Therefore, the notes application includes a node_modules directory to store local Node packages. The package.json application manifest stores metadata on the application, including name, version, package dependencies, and software licensing information.
+  
+  
+  Hooks:
+    |
+	|-->Remote hook (Customer Operations)
+	|        |
+	|        |--> Before Remote hook
+	|        |--> After Remote hook
+	|        |--> After Remote ERROR
+	|
+	|--> Operation hook --> REST Operation (Standard set of Operation)
+	|        |
+	|        |--> Access  - getMethod
+	|        |--> after/before save - pushMethod
+	|        |--> after/before delete - deleteMethod
+	|        |--> loaded  - Data decripted before its fetched from datasource and populated to model
+	|        |--> persist - data is encripted before data is stored to the dataSource from the model
+	
+
+Model Discovery:
+   - We can import table structure and generate models automatically
+   - this is for Relational databases
+   
+Model Introspection:
+   - This is a non Rational databases 
+   
+- apic loopback
+    - CustomerApp
+	- Enter
+	- Cloose empty-server
+	
+	
+
+Authentication: 
+  - Establishing an identity of the user
+Authorization: 
+  - Access level of authenticated user
+
+OAuth(Open Authorization):
+  - OAuth all about Authorization
+OIDC(Open ID Connect):
+  - Authentication
+
+To connect the LinkedIn, FB apps, Without sharing my ID and Password to other for specific application, provide authentication only without password.
+
+LinkedIn wants to access my Twitter account twitts through YUN.
+- YUN 
+   |-->Twitter ----
+   |              |
+   |--> LinkedIn<-|
+
+Above diagram mapping for each role
+
+OAuth Roles:     
+ 1. Resource owner(RO)               (Yun)
+ 2. Resource Provider (RP)           (Twitter)
+ 3. Client                           (LinkedIn app)
+ 4. Authorization provider(AP)       (Twitter)
+
+All endpoints are hosted/provided by Authorization provider(AP).
+ 
+Endpoint(EP):
+
+ 1. Authorization EP  
+      - Hosted by AP
+      - Authenticate RO
+	  - COnsent from RO
+	  - Generate Authorization code (this code has been redirected to Client)
+	  
+ 2. Token EP
+      - Hosted by AP
+	  - Authenticate Client
+	  - Verify Auth Code
+	  - Issue a tokens
+	  
+ 3. Client Redirect URI
+      - Hosted by Client
+	  - Once received the Authorization code, Client will sent code to Token EP
+	  
+Tokens:
+  1. Access Token
+     - Access Token used by client to the resource provider 
+	 - Resource provider give access to resource for client
+  2. Refresh Token
+     - Once Access Token expired, refresh token has been called.
+	 
+OAuth FLows:
+ 1. Authorization code
+ 
+ 2. Implicit 
+     - Used for Public clients 
+	 - Can't store tokens securely
+     - There are Cleint credentials
+     - No token endpoints, only Authorization endpoints(AEP) --> Issue Access Token
+	 - No Refresh Token for this case
+	 
+3. Resource Owner Password Credentials (Example is Google Drive and Google cloud uses same Id and password)
+     - No AEP, only Token Endpoints
+	 
+4. Client Credentials:
+     - Confidential Clients 
+	 - No Resource Owner 
+	 - No AEP, only TEP 
+	 
+
+In API Connect Terminology:
+   1. Authorization code called as Access Code
+   2. Implicit called as Implicit
+   3. Resource Owner Password Credentials  called as Password
+   4. Client Credentials called as Application
+   
+ 
+ SSL/TLS
+  - Data Confidentiality
+  - Data Integrity
+  - Impersonation Prevention
+  - Non-repudiation]
+  
+  JWT
+   - Authentication
+   - Single Sign-on
+   
+OAuth 
+  - delegation
+ 
+
+API RUNTIME:
+ - Before V5.0.6 can call as Collectors
+ - After v5.0.7 can call as Containers
+ 
+ Hypervisor is doing virtualization for windows meachine (ex. VM player)
+ 
+Hypervisor types:
+  - Type 2 - means on top of Hardware, we will install Host OS and then we will install/run Hypervisor(VM Player) to do virtualization
+              - Hardware --> Host OS --> Hypervisor --> VMs(Guest OS  --> libs/bin --> Apps)
+  - Type 1 - Means on top of Hardware, we will install/run Hypervisor(VM ESXi) to do virtualization without having under laying HOST OS (Bare Metal Servers)
+              - Hardware --> Hypervisor --> VMs(Guest OS  --> libs/bin --> Apps)
+  - Type 3 ( Containers) - Docker supports only Unix Kernel(Linux mother Kernel). In Container will share only Kernel instead of HOST OS componet. So memory usage is less and performace is faster.
+              - Hardware --> (Kernel --> Host OS) --> Docker Engine --> (libs/bin --> Apps) and (Containers)
+
+			  
+- Docker Engine > Its like a server (it contains REST Interface and Docker CLI)
+- Docker Client
+- Docker FIle   > Set of instructions like build scripts (example is Maven)
+- Docker Image  > A file and Application code will contain docker build called as Docker Image
+                       - Docker Image <-- Docker Build |<-- Docker file
+					                                   |<-- App
+- Docker Hub    > To save docker image we can use docker hub (its acts like repository).
+                         Docker Hub <-- Docker Image <-- Docker Build |<-- Docker file
+					                                                  |<-- App
+- Containers:   > Its a runtime instance of container.
+			      - Image --> Docker run --> Container
+
+- Docker Compose > This will build all services in a bundle like API Connect (1 Management, 1 Portal, 1 Gateway and 1 Host servers). 
+			         - Its used for stacking up container
+					 
+Docker run - to create an image
+docker start <1d>
+docker stop <id>
+docker rm
+docker rmi
+docker images 
+docker ps
+docker ps -a
+docker container ls 
+
+
+
+Product:
+    -> Control visibility 
+	       - Public
+		   - Authenticate
+		   - Control
+	-> Subscription
+	       - Authenticate
+		   - Control
+    -> Plan : we have divide Inventry product  into multiple plans or a single plan based customer needs.
+	       - Quota / Rate limits
+		
+Product phases:
+     Draft --> 
+     staged --> ca't see for subdcription 
+     Published --> consumer can subscripe it
+     Depricatte --> no new subscription only old subdcription are allowed 
+	 Retired --> ca'nt able to use product 
+	 Archived --> not show in management server
+	 
+	 
+	https://mtm.cebglobal.com/url/u.aspx?7D360F337131598509
+	
+	Yuvaraju 9500036251
+	
+	
+Yuvaraj Panneer Selvam is of high standard (professional approach by the instructor) , the materials were organised and suited the flexible work style.
+
+IBM API CONNECT concepts were explained thoroughly backed up with hands on exercises. 
+
+Yuvaraj Panneer Selvam is very knowledgeable and has very good presentation skills. 
+
+The main quality of teaching which is patience can be observed quite clearly.
+
